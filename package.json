@@ -1,6 +1,6 @@
 {
   "name": "redux-universal",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A replacement for Redux's built-in middleware store enhancer to build universal apps.",
   "main": "lib/index.js",
   "scripts": {
