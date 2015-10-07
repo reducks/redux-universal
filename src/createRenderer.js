@@ -1,5 +1,22 @@
 import identifyAction from './identifyAction';
 
+const repeatedActionError = (repeatedActionBodies) => {
+  return new Error([
+    `Rendering has been aborted to prevent an infinite loop. `,
+    `The following asynchronous actions were called repeatedly in `,
+    `successive rendering cycles: `,
+    ...repeatedActionBodies.map((action) => {
+      if (typeof action === 'function') {
+        return action.toString();
+      }
+
+      return require('util').inspect(action, {
+        depth: 2,
+      });
+    }),
+  ].join(''));
+};
+
 /**
  * Creates a universal render function.
  *
@@ -41,23 +58,7 @@ export default (getPromises) => {
             .map((key) => actionsWithoutDuplicates[key]);
 
           if (repeatedActionBodies.length) {
-            const error = [
-              `\n\x1b[33mRendering has been aborted to prevent an infinite loop. `,
-              `The following asynchronous actions were called repeatedly in `,
-              `successive rendering cycles:\x1b[0m\n\n`,
-              ...repeatedActionBodies.map((action) => {
-                if (typeof action === 'function') {
-                  return action.toString();
-                }
-
-                return require('util').inspect(action, {
-                  colors: true,
-                  depth: 2,
-                });
-              }),
-            ].join('');
-
-            throw new Error(error);
+            throw repeatedActionError(repeatedActionBodies);
           } else {
             seenPromises = seenPromises.concat(newPromises);
             seenActions = {...seenActions, ...actionsWithoutDuplicates};
