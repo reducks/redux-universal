@@ -1,0 +1,8 @@
+{
+  "preset": "airbnb",
+  "excludeFiles": [
+    "coverage/**",
+    "node_modules/**",
+    "lib/**"
+  ]
+}
