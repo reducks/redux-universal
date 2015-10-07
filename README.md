@@ -17,7 +17,9 @@ npm install --save redux-univeral
 In the file where you configure your store you need to make sure to use the applyMiddleware when rendering in the backend.
 
 ```
-const applyMiddleware = __SERVER__ ? require('redux-universal') : require('redux').applyMiddleware;
+const applyMiddleware = __SERVER__ ?
+  require('redux-universal') :
+  require('redux').applyMiddleware;
 ```
 
 The custom applyMiddleware enhances the store and appends a new method to it.
