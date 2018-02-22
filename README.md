@@ -1,3 +1,5 @@
+**INACTIVE** This library is not maintained
+
 # Redux Universal
 
 A Redux store enhancer taking care of promise resolution for building universal apps.
